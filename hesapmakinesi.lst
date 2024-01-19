@@ -1,0 +1,819 @@
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[205]: Found directive in column 1. (LIST)
+                      00001 LIST                            P=16F877A
+                      00002 #include                        <PIC16F877A.INC>
+                      00001         LIST
+                      00002 ; P16F877A.INC  Standard Header File, Version 1.00    Microchip Technology, Inc.
+                      00400         LIST
+Warning[205]: Found directive in column 1. (__config)
+2007   3F31           00003 __config                        H'3F31'
+  00000021            00004 SS                      EQU             0X0021
+  00000022            00005 S1                      EQU             0X0022
+  00000023            00006 S2                      EQU             0X0023
+  00000024            00007 GS1                     EQU             0X0024
+  00000025            00008 GS2                     EQU             0X0025
+  00000026            00009 GS3                     EQU             0X0026
+  00000027            00010 DURUM           EQU             0X0027
+  00000028            00011 SONUC           EQU             0X0028
+  00000029            00012 SAYI1           EQU             0X0029
+  0000003A            00013 SAYI2           EQU             0X003A
+  0000003B            00014 BIRLER          EQU             0X003B
+  0000003C            00015 ONLAR           EQU             0X003C
+                      00016 
+Warning[205]: Found directive in column 1. (ORG)
+0000                  00017 ORG                             0X0000
+Warning[203]: Found opcode in column 1. (GOTO)
+0000   280A           00018 GOTO                    AYAR
+                      00019 
+Warning[205]: Found directive in column 1. (ORG)
+0009                  00020 ORG                             0X0009
+Warning[203]: Found opcode in column 1. (GOTO)
+0009   2824           00021 GOTO                    MAIN
+                      00022 
+000A                  00023 AYAR
+000A   0188           00024         CLRF                    PORTD
+000B   1683           00025         BSF                             STATUS,RP0
+000C   1303           00026         BCF                             STATUS,RP1
+000D   3006           00027         MOVLW                   0X06
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000E   009F           00028         MOVWF                   ADCON1
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000F   0185           00029         CLRF                    TRISA
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0010   0186           00030         CLRF                    TRISB
+0011   30F0           00031         MOVLW                   0XF0
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0012   0088           00032         MOVWF                   TRISD
+0013   1283           00033         BCF                             STATUS,RP0
+0014   1303           00034         BCF                             STATUS,RP1
+0015   0000           00035         NOP
+0016   2019           00036         CALL                    SILL
+0017   0000           00037         NOP
+0018   2824           00038         GOTO                    MAIN
+                      00039 
+                      00040 ;-------HER ÝHTÝMALE KARÞI REGISTER'LARI SIFIRLAMA-----
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00041 
+0019                  00042 SILL
+0019   01BC           00043         CLRF                    ONLAR
+001A   01A9           00044         CLRF                    SAYI1
+001B   01BA           00045         CLRF                    SAYI2
+001C   01A8           00046         CLRF                    SONUC
+001D   01A7           00047         CLRF                    DURUM
+001E   1005           00048         BCF                             PORTA,0
+001F   1485           00049         BSF                             PORTA,1
+0020   3000           00050         MOVLW                   0X00
+0021   20E6           00051         CALL                    SAYILAR
+0022   0086           00052         MOVWF                   PORTB
+0023   0008           00053         RETURN
+                      00054 
+0024                  00055 MAIN
+                      00056 ;-----ÝLK DÝKEY SIRA ÝÇÝN GEREKLÝ BUTON KONTROLLERÝ(1-2-3-/)-----
+                      00057 
+0024   3001           00058                 MOVLW                   0X01
+0025   0088           00059                 MOVWF                   PORTD
+0026   1A08           00060                 BTFSC                   PORTD,4
+0027   207A           00061                 CALL                    BIR
+0028   1A88           00062                 BTFSC                   PORTD,5
+0029   2075           00063                 CALL                    IKI
+002A   1B08           00064                 BTFSC                   PORTD,6
+002B   2070           00065                 CALL                    UC
+002C   1B88           00066                 BTFSC                   PORTD,7
+002D   15A7           00067                 BSF                             DURUM,3
+                      00068 
+                      00069 ;-----2. DÝKEY SIRA ÝÇÝN GEREKLÝ BUTON KONTROLLERÝ(4-5-6-*)-----
+                      00070 
+002E   3002           00071                 MOVLW                   0X02
+002F   0088           00072                 MOVWF                   PORTD
+0030   1A08           00073                 BTFSC                   PORTD,4
+0031   206B           00074                 CALL                    DORT
+0032   1A88           00075                 BTFSC                   PORTD,5
+0033   2066           00076                 CALL                    BES
+0034   1B08           00077                 BTFSC                   PORTD,6
+0035   2061           00078                 CALL                    ALTI
+0036   1B88           00079                 BTFSC                   PORTD,7
+0037   1527           00080                 BSF                             DURUM,2
+                      00081 
+                      00082 ;-----3. DÝKEY SIRA ÝÇÝN GEREKLÝ BUTON KONTROLLERÝ(7-8-9-[-])-----
+                      00083 
+0038   3004           00084                 MOVLW                   0X04
+0039   0088           00085                 MOVWF                   PORTD
+003A   1A08           00086                 BTFSC                   PORTD,4
+003B   205C           00087                 CALL                    YEDI
+003C   1A88           00088                 BTFSC                   PORTD,5
+003D   2057           00089                 CALL                    SEKIZ
+003E   1B08           00090                 BTFSC                   PORTD,6
+003F   2052           00091                 CALL                    DOKUZ
+0040   1B88           00092                 BTFSC                   PORTD,7
+0041   14A7           00093                 BSF                             DURUM,1
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00094 
+                      00095 ;-----4. DÝKEY SIRA ÝÇÝN GEREKLÝ BUTON KONTROLLERÝ(ONOFF-0-=-+)-----
+                      00096 
+0042   3008           00097                 MOVLW                   0X08
+0043   0088           00098                 MOVWF                   PORTD
+0044   1A08           00099                 BTFSC                   PORTD,4
+0045   288F           00100                 GOTO                    ONOFF
+0046   1A88           00101                 BTFSC                   PORTD,5
+0047   207F           00102                 CALL                    SIFIR
+0048   1B08           00103                 BTFSC                   PORTD,6
+0049   2895           00104                 GOTO                    ISLEM
+004A   1B88           00105                 BTFSC                   PORTD,7
+004B   1427           00106                 BSF                             DURUM,0
+                      00107 
+004C   2824           00108         GOTO                    MAIN
+                      00109 
+004D                  00110 VEYSEL
+004D   1A27           00111         BTFSC                   DURUM,4
+004E   208A           00112         CALL                    S2GOSTER
+004F   1E27           00113         BTFSS                   DURUM,4
+0050   2084           00114         CALL                    S1GOSTER
+0051   0008           00115         RETURN
+                      00116 ;---------------9 SAYISININ ÝÞLEMLERÝ-----------------
+                      00117 
+0052                  00118 DOKUZ
+0052   3009           00119         MOVLW                   0X09
+0053   204D           00120         CALL                    VEYSEL
+0054   1B08           00121         BTFSC                   PORTD,6
+0055   2854           00122         GOTO                    $-1
+0056   0008           00123         RETURN
+                      00124 
+                      00125 ;---------------8 SAYISININ ÝÞLEMLERÝ-----------------
+                      00126 
+0057                  00127 SEKIZ
+0057   3008           00128         MOVLW                   0X08
+0058   204D           00129         CALL                    VEYSEL
+0059   1A88           00130         BTFSC                   PORTD,5
+005A   2859           00131         GOTO                    $-1
+005B   0008           00132         RETURN
+                      00133 
+                      00134 ;---------------7 SAYISININ ÝÞLEMLERÝ-----------------
+                      00135 
+005C                  00136 YEDI
+005C   3007           00137         MOVLW                   0X07
+005D   204D           00138         CALL                    VEYSEL
+005E   1A08           00139         BTFSC                   PORTD,4
+005F   285E           00140         GOTO                    $-1
+0060   0008           00141         RETURN
+                      00142 
+                      00143 ;---------------6 SAYISININ ÝÞLEMLERÝ-----------------
+                      00144 
+0061                  00145 ALTI
+0061   3006           00146         MOVLW                   0X06
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0062   204D           00147         CALL                    VEYSEL
+0063   1B08           00148         BTFSC                   PORTD,6
+0064   2863           00149         GOTO                    $-1
+0065   0008           00150         RETURN
+                      00151 
+                      00152 ;---------------5 SAYISININ ÝÞLEMLERÝ-----------------
+                      00153 
+0066                  00154 BES
+0066   3005           00155         MOVLW                   0X05
+0067   204D           00156         CALL                    VEYSEL
+0068   1A88           00157         BTFSC                   PORTD,5
+0069   2868           00158         GOTO                    $-1
+006A   0008           00159         RETURN
+                      00160 
+                      00161 ;---------------4 SAYISININ ÝÞLEMLERÝ-----------------
+                      00162 
+006B                  00163 DORT
+006B   3004           00164         MOVLW                   0X04
+006C   204D           00165         CALL                    VEYSEL
+006D   1A08           00166         BTFSC                   PORTD,4
+006E   286D           00167         GOTO                    $-1
+006F   0008           00168         RETURN
+                      00169 
+                      00170 ;---------------3 SAYISININ ÝÞLEMLERÝ-----------------
+                      00171 
+0070                  00172 UC
+0070   3003           00173         MOVLW                   0X03
+0071   204D           00174         CALL                    VEYSEL
+0072   1B08           00175         BTFSC                   PORTD,6
+0073   2872           00176         GOTO                    $-1
+0074   0008           00177         RETURN
+                      00178 
+                      00179 ;---------------2 SAYISININ ÝÞLEMLERÝ-----------------
+                      00180 
+0075                  00181 IKI
+0075   3002           00182         MOVLW                   0X02
+0076   204D           00183         CALL                    VEYSEL
+0077   1A88           00184         BTFSC                   PORTD,5
+0078   2877           00185         GOTO                    $-1
+0079   0008           00186         RETURN
+                      00187 
+                      00188 ;---------------1 SAYISININ ÝÞLEMLERÝ-----------------
+                      00189 
+007A                  00190 BIR
+007A   3001           00191         MOVLW                   0X01
+007B   204D           00192         CALL                    VEYSEL
+007C   1A08           00193         BTFSC                   PORTD,4
+007D   287C           00194         GOTO                    $-1
+007E   0008           00195         RETURN
+                      00196 
+                      00197 ;---------------0 SAYISININ ÝÞLEMLERÝ-----------------
+                      00198 
+007F                  00199 SIFIR
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+007F   3000           00200         MOVLW                   0X00
+0080   204D           00201         CALL                    VEYSEL
+0081   1A88           00202         BTFSC                   PORTD,5
+0082   2881           00203         GOTO                    $-1
+0083   0008           00204         RETURN
+                      00205 
+                      00206 ;---------------GÝRÝLEN ÝLK SAYIYI GÖSTER-----------------
+                      00207 
+0084                  00208 S1GOSTER
+0084   00A9           00209         MOVWF                   SAYI1
+0085   20E6           00210         CALL                    SAYILAR
+0086   1485           00211         BSF                             PORTA,1
+0087   0086           00212         MOVWF                   PORTB
+0088   1627           00213         BSF                             DURUM,4
+0089   0008           00214         RETURN
+                      00215 
+                      00216 ;---------------GÝRÝLEN 2. SAYIYI GÖSTER------------------
+                      00217 
+008A                  00218 S2GOSTER
+008A   00BA           00219         MOVWF                   SAYI2
+008B   20E6           00220         CALL                    SAYILAR
+008C   1485           00221         BSF                             PORTA,1
+008D   0086           00222         MOVWF                   PORTB
+008E   0008           00223         RETURN
+                      00224 
+                      00225 ;---------------PROGRAMI SONLANDIR------------------------
+                      00226 
+008F                  00227 ONOFF
+008F   2019           00228         CALL                    SILL
+0090   3008           00229         MOVLW                   0X08
+0091   0088           00230         MOVWF                   PORTD
+Warning[207]: Found label after column 1. (LOOP)
+0092                  00231         LOOP
+0092   1A08           00232                 BTFSC                   PORTD,4
+0093   2892           00233                 GOTO                    LOOP
+0094   2824           00234                 GOTO                    MAIN
+                      00235 
+                      00236 ;---------------ÝÞLEMÝNÝ SEÇME DURUMU---------------------
+                      00237 
+0095                  00238 ISLEM
+0095   1827           00239         BTFSC                   DURUM,0
+0096   20B4           00240         CALL                    TOPLA
+0097   18A7           00241         BTFSC                   DURUM,1
+0098   20B8           00242         CALL                    CIKAR
+0099   1927           00243         BTFSC                   DURUM,2
+009A   20BC           00244         CALL                    CARP
+009B   19A7           00245         BTFSC                   DURUM,3
+009C   20C1           00246         CALL                    BOL
+009D   20D1           00247         CALL                    GOSTER
+                      00248 ;---------ÝÞLEM BÝTTÝKTEN SONRA SAYILARI GÖSTERME---------
+                      00249 
+009E                  00250 TEKRAR
+                      00251 
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+009E   1005           00252         BCF                     PORTA,0
+009F   1485           00253         BSF                     PORTA,1
+00A0   083B           00254         MOVF            BIRLER,W
+00A1   20E6           00255         CALL            SAYILAR
+00A2   0086           00256         MOVWF           PORTB
+                      00257 
+00A3   20C8           00258         CALL            GECIK
+                      00259 
+00A4   1085           00260         BCF                     PORTA,1
+00A5   1405           00261         BSF                     PORTA,0
+00A6   083C           00262         MOVF            ONLAR,W
+00A7   20E6           00263         CALL            SAYILAR
+00A8   0086           00264         MOVWF           PORTB
+                      00265 
+00A9   20C8           00266         CALL            GECIK
+                      00267 
+00AA   3008           00268         MOVLW           0X08
+00AB   0088           00269         MOVWF           PORTD
+                      00270 
+00AC   1E08           00271         BTFSS           PORTD,4
+00AD   289E           00272         GOTO            TEKRAR
+                      00273         
+00AE   1485           00274         BSF                     PORTA,1
+00AF   1405           00275         BSF                     PORTA,0
+00B0   3000           00276         MOVLW           0X00
+00B1   20E6           00277         CALL            SAYILAR
+00B2   0086           00278         MOVWF           PORTB   
+00B3   280A           00279         GOTO            AYAR
+                      00280 
+                      00281 ;------------------TOPLAMA_ÝÞLEMÝ--------------------------
+                      00282 
+00B4                  00283 TOPLA
+00B4   0829           00284         MOVF                    SAYI1,W
+00B5   073A           00285         ADDWF                   SAYI2,W
+00B6   00A8           00286         MOVWF                   SONUC
+00B7   0008           00287         RETURN
+                      00288 
+                      00289 ;------------------ÇIKARMA_ÝÞLEMÝ--------------------------
+                      00290 
+00B8                  00291 CIKAR
+00B8   083A           00292         MOVF                    SAYI2,W
+00B9   0229           00293         SUBWF                   SAYI1,W
+00BA   00A8           00294         MOVWF                   SONUC
+00BB   0008           00295         RETURN
+                      00296 
+                      00297 ;------------------ÇARPMA_ÝÞLEMÝ---------------------------
+                      00298 
+00BC                  00299 CARP
+00BC   0829           00300         MOVF                    SAYI1,W
+00BD                  00301 DON
+00BD   07A8           00302                 ADDWF                   SONUC,F
+Message[305]: Using default destination of 1 (file).
+00BE   0BBA           00303                 DECFSZ                  SAYI2
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00BF   28BD           00304                 GOTO                    DON
+00C0   0008           00305         RETURN
+                      00306 
+                      00307 ;------------------BÖLME_ÝÞLEMÝ----------------------------
+                      00308 
+00C1                  00309 BOL
+00C1   083A           00310         MOVF                    SAYI2,W
+00C2   02A9           00311         SUBWF                   SAYI1,F
+00C3   1C03           00312                 BTFSS                   STATUS,C
+00C4   28C7           00313                 GOTO                    DON2
+Message[305]: Using default destination of 1 (file).
+00C5   0AA8           00314                 INCF                    SONUC
+00C6   28C1           00315                 GOTO                    BOL
+00C7                  00316 DON2
+00C7   0008           00317         RETURN
+                      00318 
+                      00319 ;------------------7SEG-GECÝKME----------------------------
+                      00320 
+00C8                  00321 GECIK
+00C8   30F0           00322         MOVLW                   0XF0
+00C9   00A2           00323         MOVWF                   S1
+00CA                  00324 GECIK1
+00CA   300F           00325                 MOVLW                   0X0F
+00CB   00A3           00326                 MOVWF                   S2
+00CC                  00327 GECIK2
+00CC   0BA3           00328                         DECFSZ                  S2,F
+00CD   28CC           00329                         GOTO                    GECIK2
+00CE   0BA2           00330                         DECFSZ                  S1,F
+00CF   28CA           00331                         GOTO                    GECIK1
+00D0   0008           00332         RETURN
+                      00333 
+                      00334 ;-----------ÝÞLEM SONRASI SAYI KONTROLÜ---------
+                      00335 
+00D1                  00336 GOSTER
+00D1   1403           00337         BSF                             STATUS,C
+00D2   300A           00338         MOVLW                   0X0A
+00D3   0228           00339         SUBWF                   SONUC,W
+00D4   1C03           00340         BTFSS                   STATUS,C
+00D5   20D9           00341         CALL                    TEKBAS
+00D6   1803           00342         BTFSC                   STATUS,C
+00D7   20DC           00343         CALL                    CIFTBAS
+00D8   0008           00344         RETURN
+                      00345 
+                      00346 ;-------------BASAMAKLARA AYIRMA---------------
+                      00347 
+00D9                  00348 TEKBAS
+00D9   0828           00349                 MOVF                    SONUC,W
+00DA   00BB           00350                 MOVWF                   BIRLER
+00DB   0008           00351                 RETURN
+                      00352 
+00DC                  00353 CIFTBAS
+00DC   300A           00354                 MOVLW           0X0A
+00DD   02A8           00355                 SUBWF           SONUC,F
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00DE   1C03           00356                         BTFSS           STATUS,C
+00DF   28E2           00357                         GOTO            DONER
+Message[305]: Using default destination of 1 (file).
+00E0   0ABC           00358                         INCF            ONLAR
+00E1   28DC           00359                         GOTO            CIFTBAS
+Warning[207]: Found label after column 1. (DONER)
+00E2                  00360         DONER
+00E2   300A           00361                 MOVLW           0X0A
+00E3   07A8           00362                 ADDWF           SONUC,F
+00E4   20D9           00363                 CALL            TEKBAS
+00E5   0008           00364         RETURN
+                      00365 
+                      00366 ;---------------PROTEUS ÝÇÝN TABLO---------------
+                      00367 
+00E6                  00368 SAYILAR
+00E6   0782           00369         ADDWF                   PCL,F
+00E7   3440           00370         RETLW                   0X40
+00E8   3479           00371         RETLW                   0X79
+00E9   3424           00372         RETLW                   0X24
+00EA   3430           00373         RETLW                   0X30
+00EB   3419           00374         RETLW                   0X19
+00EC   3412           00375         RETLW                   0X12
+00ED   3402           00376         RETLW                   0X02
+00EE   3478           00377         RETLW                   0X78
+00EF   3400           00378         RETLW                   0X00
+00F0   3410           00379         RETLW                   0X10
+                      00380 
+                      00381 
+                      00382 ;---------------PROGRAMI SONLANDIR---------------
+                      00383 
+Warning[205]: Found directive in column 1. (END)
+                      00384 END
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ACKDT                             00000005
+ACKEN                             00000004
+ACKSTAT                           00000006
+ADCON0                            0000001F
+ADCON1                            0000009F
+ADCS0                             00000006
+ADCS1                             00000007
+ADCS2                             00000006
+ADDEN                             00000003
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+ALTI                              00000061
+AYAR                              0000000A
+BCLIE                             00000003
+BCLIF                             00000003
+BES                               00000066
+BF                                00000000
+BIR                               0000007A
+BIRLER                            0000003B
+BOL                               000000C1
+BRGH                              00000002
+C                                 00000000
+C1INV                             00000004
+C1OUT                             00000006
+C2INV                             00000005
+C2OUT                             00000007
+CARP                              000000BC
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCP2CON                           0000001D
+CCP2IE                            00000000
+CCP2IF                            00000000
+CCP2M0                            00000000
+CCP2M1                            00000001
+CCP2M2                            00000002
+CCP2M3                            00000003
+CCP2X                             00000005
+CCP2Y                             00000004
+CCPR1H                            00000016
+CCPR1L                            00000015
+CCPR2H                            0000001C
+CCPR2L                            0000001B
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CHS0                              00000003
+CHS1                              00000004
+CHS2                              00000005
+CIFTBAS                           000000DC
+CIKAR                             000000B8
+CIS                               00000003
+CKE                               00000006
+CKP                               00000004
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             0000009C
+CMIE                              00000006
+CMIF                              00000006
+CREN                              00000004
+CSRC                              00000007
+CVR0                              00000000
+CVR1                              00000001
+CVR2                              00000002
+CVR3                              00000003
+CVRCON                            0000009D
+CVREN                             00000007
+CVROE                             00000006
+CVRR                              00000005
+D                                 00000005
+DATA_ADDRESS                      00000005
+DC                                00000001
+DOKUZ                             00000052
+DON                               000000BD
+DON2                              000000C7
+DONER                             000000E2
+DORT                              0000006B
+DURUM                             00000027
+D_A                               00000005
+EEADR                             0000010D
+EEADRH                            0000010F
+EECON1                            0000018C
+EECON2                            0000018D
+EEDATA                            0000010C
+EEDATH                            0000010E
+EEIE                              00000004
+EEIF                              00000004
+EEPGD                             00000007
+F                                 00000001
+FERR                              00000002
+FSR                               00000004
+GCEN                              00000007
+GECIK                             000000C8
+GECIK1                            000000CA
+GECIK2                            000000CC
+GIE                               00000007
+GO                                00000002
+GOSTER                            000000D1
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+GO_DONE                           00000002
+GS1                               00000024
+GS2                               00000025
+GS3                               00000026
+I2C_DATA                          00000005
+I2C_READ                          00000002
+I2C_START                         00000003
+I2C_STOP                          00000004
+IBF                               00000007
+IBOV                              00000005
+IKI                               00000075
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IRP                               00000007
+ISLEM                             00000095
+LOOP                              00000092
+MAIN                              00000024
+NOT_A                             00000005
+NOT_ADDRESS                       00000005
+NOT_BO                            00000000
+NOT_BOR                           00000000
+NOT_DONE                          00000002
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_RC8                           00000006
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+NOT_TX8                           00000006
+NOT_W                             00000002
+NOT_WRITE                         00000002
+OBF                               00000006
+OERR                              00000001
+ONLAR                             0000003C
+ONOFF                             0000008F
+OPTION_REG                        00000081
+P                                 00000004
+PCFG0                             00000000
+PCFG1                             00000001
+PCFG2                             00000002
+PCFG3                             00000003
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PEN                               00000002
+PIE1                              0000008C
+PIE2                              0000008D
+PIR1                              0000000C
+PIR2                              0000000D
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PORTA                             00000005
+PORTB                             00000006
+PORTC                             00000007
+PORTD                             00000008
+PORTE                             00000009
+PR2                               00000092
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+PSPIE                             00000007
+PSPIF                             00000007
+PSPMODE                           00000004
+R                                 00000002
+RBIE                              00000003
+RBIF                              00000000
+RC8_9                             00000006
+RC9                               00000006
+RCD8                              00000000
+RCEN                              00000003
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+READ_WRITE                        00000002
+RP0                               00000005
+RP1                               00000006
+RSEN                              00000001
+RX9                               00000006
+RX9D                              00000000
+R_W                               00000002
+S                                 00000003
+S1                                00000022
+S1GOSTER                          00000084
+S2                                00000023
+S2GOSTER                          0000008A
+SAYI1                             00000029
+SAYI2                             0000003A
+SAYILAR                           000000E6
+SEKIZ                             00000057
+SEN                               00000000
+SIFIR                             0000007F
+SILL                              00000019
+SMP                               00000007
+SONUC                             00000028
+SPBRG                             00000099
+SPEN                              00000007
+SREN                              00000005
+SS                                00000021
+SSPADD                            00000093
+SSPBUF                            00000013
+SSPCON                            00000014
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE 13
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+SSPCON2                           00000091
+SSPEN                             00000005
+SSPIE                             00000003
+SSPIF                             00000003
+SSPM0                             00000000
+SSPM1                             00000001
+SSPM2                             00000002
+SSPM3                             00000003
+SSPOV                             00000006
+SSPSTAT                           00000094
+STATUS                            00000003
+SYNC                              00000004
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1INSYNC                          00000002
+T1OSCEN                           00000003
+T1SYNC                            00000002
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TEKBAS                            000000D9
+TEKRAR                            0000009E
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1CS                            00000001
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOPLA                             000000B4
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISB                             00000086
+TRISC                             00000087
+TRISD                             00000088
+TRISE                             00000089
+TRISE0                            00000000
+TRISE1                            00000001
+TRISE2                            00000002
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE 14
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TRMT                              00000001
+TX8_9                             00000006
+TX9                               00000006
+TX9D                              00000000
+TXD8                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+UA                                00000001
+UC                                00000070
+VEYSEL                            0000004D
+W                                 00000000
+WCOL                              00000007
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+YEDI                              0000005C
+Z                                 00000002
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_ALL                           00001FFF
+_CP_OFF                           00003FFF
+_DEBUG_OFF                        00003FFF
+_DEBUG_ON                         000037FF
+_HS_OSC                           00003FFE
+_LP_OSC                           00003FFC
+_LVP_OFF                          00003F7F
+_LVP_ON                           00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+_RC_OSC                           00003FFF
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_WRT_1FOURTH                      00003BFF
+_WRT_256                          00003DFF
+_WRT_HALF                         000039FF
+_WRT_OFF                          00003FFF
+_XT_OSC                           00003FFD
+__16F877A                         00000001
+__DEBUG                           1
+MPASM  5.51                 HESAPMAKINESI.ASM   11-17-2019  12:25:14         PAGE 15
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+
+0000 : X--------XXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX X---------------
+2000 : -------X-------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   233
+Program Memory Words Free:  7959
+
+
+Errors   :     0
+Warnings :     9 reported,     0 suppressed
+Messages :     7 reported,     0 suppressed
+
+

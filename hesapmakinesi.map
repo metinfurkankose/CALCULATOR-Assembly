@@ -1,0 +1,102 @@
+MPLINK 4.49, Linker
+Linker Map File - Created Sun Nov 17 12:25:15 2019
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000000
+                   .org_1       code   0x000000    program   0x000002
+                   .org_2       code   0x000009    program   0x0001d0
+.config_2007_HESAPMAKINESI.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000000      
+                            0x000009    0x0000f0      
+                            0x002007    0x002007      
+            234 out of 8454 program addresses used, program memory utilization is 2%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     ALTI   0x000061    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     AYAR   0x00000a    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                      BES   0x000066    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                      BIR   0x00007a    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                      BOL   0x0000c1    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     CARP   0x0000bc    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                  CIFTBAS   0x0000dc    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    CIKAR   0x0000b8    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    DOKUZ   0x000052    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                      DON   0x0000bd    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     DON2   0x0000c7    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    DONER   0x0000e2    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     DORT   0x00006b    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    GECIK   0x0000c8    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   GECIK1   0x0000ca    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   GECIK2   0x0000cc    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   GOSTER   0x0000d1    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                      IKI   0x000075    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    ISLEM   0x000095    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     LOOP   0x000092    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     MAIN   0x000024    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    ONOFF   0x00008f    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                 S1GOSTER   0x000084    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                 S2GOSTER   0x00008a    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                  SAYILAR   0x0000e6    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    SEKIZ   0x000057    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    SIFIR   0x00007f    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     SILL   0x000019    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   TEKBAS   0x0000d9    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   TEKRAR   0x00009e    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    TOPLA   0x0000b4    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                       UC   0x000070    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   VEYSEL   0x00004d    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     YEDI   0x00005c    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                     AYAR   0x00000a    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     SILL   0x000019    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     MAIN   0x000024    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   VEYSEL   0x00004d    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    DOKUZ   0x000052    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    SEKIZ   0x000057    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     YEDI   0x00005c    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     ALTI   0x000061    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                      BES   0x000066    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     DORT   0x00006b    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                       UC   0x000070    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                      IKI   0x000075    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                      BIR   0x00007a    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    SIFIR   0x00007f    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                 S1GOSTER   0x000084    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                 S2GOSTER   0x00008a    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    ONOFF   0x00008f    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     LOOP   0x000092    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    ISLEM   0x000095    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   TEKRAR   0x00009e    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    TOPLA   0x0000b4    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    CIKAR   0x0000b8    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     CARP   0x0000bc    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                      DON   0x0000bd    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                      BOL   0x0000c1    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                     DON2   0x0000c7    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    GECIK   0x0000c8    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   GECIK1   0x0000ca    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   GECIK2   0x0000cc    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   GOSTER   0x0000d1    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                   TEKBAS   0x0000d9    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                  CIFTBAS   0x0000dc    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                    DONER   0x0000e2    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+                  SAYILAR   0x0000e6    program     static H:\Flash\DESLER\Micro\Uygulamalar\Hesap_Makinesi\hesapmakinesi.asm
+
+
